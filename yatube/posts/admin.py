@@ -16,4 +16,5 @@ class PostAdmin(admin.ModelAdmin):
 # класс PostAdmin
 admin.site.register(Post, PostAdmin)
 
+
 admin.site.register(Group)
