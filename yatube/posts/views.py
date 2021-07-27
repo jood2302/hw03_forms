@@ -1,9 +1,4 @@
-from typing import Text
 from django.shortcuts import get_object_or_404, render
-
-# Create your views here.
-from django.http import HttpResponse
-# Импортируем модель, чтобы обратиться к ней
 from .models import Group, Post
 
 
