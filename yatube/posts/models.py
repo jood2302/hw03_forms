@@ -23,6 +23,7 @@ class Post(models.Model):
         ordering = ['-pub_date']
         default_related_name = 'posts'
 
+
 class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
