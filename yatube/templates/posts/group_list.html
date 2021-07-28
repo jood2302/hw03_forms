@@ -3,8 +3,8 @@
   Записи сообщества
 {% endblock %}
 {% block content %}
-  <h1>{{group}}</h1>
-  <p>{{group.description}}</p>
+  <h1>{{ group }}</h1>
+  <p>{{ group.description }}</p>
   {% for post in posts %}
     <ul>
       <li>

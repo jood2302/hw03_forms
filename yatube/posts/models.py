@@ -14,11 +14,14 @@ class Post(models.Model):
     )
     group = models.ForeignKey(
         'Group',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
     )
 
+    class Meta:
+        ordering = ['-pub_date']
+        default_related_name = 'posts'
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
