@@ -1,21 +1,21 @@
-{% extends 'base.html' %}
-
-{% block title %}
-  {{ title }}
-{% endblock %}
-
+{% extends "base.html" %}
+{% block title %}Последние обновления на сайте{% endblock %}
 {% block content %}
-  {% for post in posts %}
-  <ul>
-    <li>
-      Автор: {{ post.author.get_full_name }}
-    </li>
-    <li>
-      Дата публикации: {{ post.pub_date|date:"d E Y" }}
-    </li>
-  </ul>
-  <p>{{ post.text }}</p>    
-  <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
-  {% if not forloop.last %}<hr>{% endif %}
-  {% endfor %}
+  {% for post in page_obj %}
+    <ul>
+      <li>
+        Автор: {{ post.author.get_full_name }}
+      <li>
+        Дата публикации: {{ post.pub_date|date:"d M Y" }}
+      </ul>
+    <p>{{ post.text|linebreaksbr }}</p>
+    {% if post_detail %}  
+    <a href="{% url 'posts:post_detail' %}">подробная информация</a>
+    {% endif %}
+    {% if post.group %}  
+    <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
+    {% endif %}
+    {% if not forloop.last %}<hr>{% endif %}
+  {% endfor%}
+  {% include 'includes/paginator.html' %}
 {% endblock %} 

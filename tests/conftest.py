@@ -1,6 +1,4 @@
 import os
-from subprocess import Popen, PIPE
-
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 root_dir_content = os.listdir(BASE_DIR)
@@ -26,19 +24,16 @@ if FILENAME not in project_dir_content:
     )
 
 from django.utils.version import get_version
+
 assert get_version() < '3.0.0', 'Пожалуйста, используйте версию Django < 3.0.0'
 
 from yatube.settings import INSTALLED_APPS
+
 assert any(app in INSTALLED_APPS for app in ['posts.apps.PostsConfig', 'posts']), (
     'Пожалуйста зарегистрируйте приложение в `settings.INSTALLED_APPS`'
 )
 
-process = Popen(['python', 'yatube/manage.py', 'makemigrations', '--check', '--dry-run', '--no-input'], stdout=PIPE,
-                stderr=PIPE)
-stdout, _ = process.communicate()
-assert process.returncode == 0, f'Вы забыли сделать миграции.\n\n{stdout.decode("UTF-8")}'
-
 pytest_plugins = [
-    'fixtures.fixture_user',
-    'fixtures.fixture_data',
+    'tests.fixtures.fixture_user',
+    'tests.fixtures.fixture_data',
 ]
