@@ -8,10 +8,10 @@ from .forms import CreationForm
 class SignUp(CreateView):
     form_class = CreationForm
     success_url = reverse_lazy('posts:index')
-    template_name = 'users/signup.html' 
+    template_name = 'users/signup.html'
 
 
 class PasswordResetForm(CreateView):
     form_class = CreationForm
     success_url = reverse_lazy('posts:index')
-    template_name = 'users/password_reset_form.html' 
+    template_name = 'users/password_reset_form.html'

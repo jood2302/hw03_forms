@@ -8,7 +8,11 @@ app_name = 'users'
 
 urlpatterns = [
     path('signup/', views.SignUp.as_view(), name='signup'),
-    path('password_reset_form/', views.PasswordResetForm.as_view(), name='password_reset_form'),
+    path(
+        'password_reset_form/',
+        views.PasswordResetForm.as_view(), 
+        name='password_reset_form'
+    ),
     path(
         'logout/',
         LogoutView.as_view(template_name='users/logged_out.html'),

@@ -38,4 +38,3 @@ class Post(models.Model):
     class Meta:
         ordering = ['-pub_date']
         default_related_name = 'posts'
-

@@ -11,7 +11,7 @@ class PostForm(forms.ModelForm):
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'cols': 40,
-                'rows': 10, 
+                'rows': 10,
                 'name': 'text'
             }),
             'group': forms.Select(attrs={
@@ -21,6 +21,6 @@ class PostForm(forms.ModelForm):
         }
 
 
-        class Meta:
-            model = Post
-            fields = ('text', 'group')
+    class Meta:
+        model = Post
+        fields = ('text', 'group')
