@@ -48,7 +48,6 @@ def profile(request, username):
     return render(request, 'posts/profile.html', context)
 
 
-
 def post_detail(request, post_id):
     user_post = get_object_or_404(Post, pk=post_id)
     posts_count = Post.objects.count()

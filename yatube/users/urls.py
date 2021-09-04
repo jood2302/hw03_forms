@@ -10,7 +10,7 @@ urlpatterns = [
     path('signup/', views.SignUp.as_view(), name='signup'),
     path(
         'password_reset_form/',
-        views.PasswordResetForm.as_view(), 
+        views.PasswordResetForm.as_view(),
         name='password_reset_form'
     ),
     path(
