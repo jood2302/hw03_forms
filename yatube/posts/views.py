@@ -1,14 +1,17 @@
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
+
 from posts.forms import PostForm
+from yatube import settings
 
 from .models import Group, Post, User
 
 
 def index(request):
-    post_list = Post.objects.all().order_by('-pub_date')
-    paginator = Paginator(post_list, 10)
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, settings.POST_COUNT)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -20,37 +23,38 @@ def index(request):
 def group_posts(request, slug):
     template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()
-    post_list = Post.objects.all().order_by('-pub_date')
-    paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
+    post_list = Post.objects.filter(group=group).all()
+    paginator = Paginator(post_list, settings.POST_COUNT) 
     page_obj = paginator.get_page(page_number)
     context = {
         'title': f'Записи сообщества {slug}',
         'group': group,
-        'posts': posts,
         'page_obj': page_obj,
+        'post_list': post_list,
     }
     return render(request, template, context)
 
 
 def profile(request, username):
     user_profile = get_object_or_404(User, username=username)
-    user_posts = user_profile.posts.all()
-    paginator = Paginator(user_posts, 10)
+    user_posts = Post.objects.filter(author=user_profile).all()
+    posts_count = user_posts.count()
+    paginator = Paginator(user_posts, settings.POST_COUNT)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
         'author': user_profile,
         'page_obj': page_obj,
-        'count': user_profile.posts.all(),
+        'count': posts_count,
     }
     return render(request, 'posts/profile.html', context)
 
 
 def post_detail(request, post_id):
     user_post = get_object_or_404(Post, pk=post_id)
-    posts_count = Post.objects.count()
+    posts = Post.objects.filter(author_id=user_post.author_id).all()
+    posts_count = posts.count()
     context = {
         'post': user_post,
         'posts_count': posts_count
@@ -61,7 +65,7 @@ def post_detail(request, post_id):
 @login_required
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST or None)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user

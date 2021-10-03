@@ -1,33 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block header %}} Профайл пользователя {{ user.first_name }} {{ user.last_name }} {% endblock %}
+{% block title %}
+  Профайл пользователя {{ user.username }}
+{% endblock %}
 {% block content %}
+<h1>Все посты пользователя {{ user.username }}  </h1>
+      <h3>Всего постов: {{ count }} </h3>  
+  {% for post in page_obj %}   
   <div class="container py-5">        
-      <h1>Все посты пользователя {{ user.first_name }} {{ user.last_name }} </h1>
-      <h3>Всего постов: {{ posts_count }} </h3>   
       <article>
         <ul>
           <li>
-            Автор: { post_number = user.posts.all().count() }
-            {% if post.user_profile %}   
-            <a href="{% url 'posts:profile' post.user_profile %}"> все посты пользователя </a>
-            {% endif %}   
+            Автор: {{ post.author.get_full_name }}
           </li>
           <li>
-            Дата публикации: {{ user_post.pub_date|date:"d.m.Y"}} 
+            Дата публикации: {{ post.pub_date|date:"d.m.Y"}} 
           </li>
         </ul>
         <p>
-          {{ user_post.text }} 
+          {{ post.text|linebreaksbr| truncatewords:30 }}
         </p>
-        {% if post_detail %} 
-        <a href="{% url 'posts:post_detail' post %}">подробная информация </a>
-        {% endif %} 
+        <a href="{% url 'posts:post_detail' post.id %}">подробная информация </a>
       </article>
-        {% if post.group %}        
+        {% if post.group != Null %}        
         <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
         {% endif %}         
       <hr>
-      {% include 'includes/paginator.html' %} 
+      {% include 'includes/paginator.html' %}
+  </div>
+  {% endfor%}   
 {% endblock %}
-{% include 'footer.html' %}

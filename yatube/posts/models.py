@@ -14,9 +14,9 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    text = models.TextField(verbose_name='Текст сообщения',
-                            help_text='Обязательное поле,\
-                             не должно быть пустым')
+    text = models.TextField(verbose_name="Текст сообщения",
+                            help_text="Обязательное поле,\
+                             не должно быть пустым")
     pub_date = models.DateTimeField("date published", auto_now_add=True)
     author = models.ForeignKey(
         User,

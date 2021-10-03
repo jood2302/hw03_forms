@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% block title %}
+  Новый пост
+{% endblock %}
 {% block header %}
-  {% if 'edit' not in request.get_full_path %}
-    Форма добавления публикации
-  {% else %}
-        Форма редактирования публикации
+    {% if is_edit %}
+    Форма редактирования публикации
+    {% else %}
+    Форма добавления публикации 
     {% endif %}
 {% endblock %}
 {% block content %}
@@ -17,8 +20,11 @@
                             {{ error }}
                         </div>
                 {% endfor %}
-                {% if 'edit' not in request.get_full_path  %}
-                <form method="post" enctype="multipart/form-data" action="{% url 'posts:post_create' %}">
+                {% if is_edit %}
+                <form action="{% url 'posts:post_edit' post.id %}" method="post">
+                {% else %}
+                <form action="{% url 'posts:post_create' %}" method="post">
+                {% endif %}
                     {% csrf_token %}
                     {% for field in form %}
                     <div class="form-group row" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
@@ -36,32 +42,14 @@
                     {% endfor %}
                     <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary" value="Save">
+                                {% if is_edit %}
+                                Сохранить
+                                {% else %}
                                 Добавить публикацию
-                            </button>
-                    </div>
-                </form>
-                {% endif %}
-                {% if 'edit' in request.get_full_path  %}
-                <form method="post" enctype="multipart/form-data" action="{% url 'posts:post_edit' post.id %}">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <div class="form-group row" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
-                            <label for="{{ field.id_for_label }}" class="col-md-4 col-form-label text-md-right">{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label>
-                            <div class="col-md-6">
-                                {{ field }}
-                                {% if field.help_text %}
-                                    <small id="{{ field.id_for_label }}-help" class="form-text text-muted">{{ field.help_text|safe }}</small>
                                 {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                    <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary" value="Save">
-                                Редактировать публикацию
                             </button>
                     </div>
                 </form>
-                {% endif %}
             </div>
         </div>
     </div>
