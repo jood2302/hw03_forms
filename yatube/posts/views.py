@@ -24,7 +24,7 @@ def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     page_number = request.GET.get('page')
     post_list = Post.objects.filter(group=group).all()
-    paginator = Paginator(post_list, settings.POST_COUNT) 
+    paginator = Paginator(post_list, settings.POST_COUNT)
     page_obj = paginator.get_page(page_number)
     context = {
         'title': f'Записи сообщества {slug}',
