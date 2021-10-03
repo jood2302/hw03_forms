@@ -56,7 +56,7 @@ def post_detail(request, post_id):
     posts_count = posts.count()
     context = {
         'post': user_post,
-        'posts_count': posts_count,
+        'posts_count': posts_count
     }
     return render(request, 'posts/post_detail.html', context)
 
