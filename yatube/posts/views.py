@@ -1,4 +1,3 @@
-from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
@@ -57,7 +56,7 @@ def post_detail(request, post_id):
     posts_count = posts.count()
     context = {
         'post': user_post,
-        'posts_count': posts_count
+        'posts_count': posts_count,
     }
     return render(request, 'posts/post_detail.html', context)
 
