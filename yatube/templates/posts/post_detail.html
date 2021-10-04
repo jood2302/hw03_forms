@@ -12,7 +12,7 @@
         </li>
         <li class="list-group-item">
           Группа:
-          {% if post.group != None %}  
+          {% if post.group is not None %}  
           {{ post.group.title }}       
           <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
           {% endif %}
