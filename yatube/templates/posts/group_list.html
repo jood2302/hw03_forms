@@ -4,13 +4,14 @@
 {% endblock %}
 {% block content %}
   <h1>{{ group }}</h1>
-  <p>Описание группы: {{ group.description }}</p>
+  <h3>Описание группы: </h3>
+  <p>{{ group.description }}</p>
   {% for post in post_list %}
   <article>
     <ul>
       <li>
         Автор: {{ post.author.get_full_name }} 
-        <a href="{% url 'posts:profile' user.username %}">
+        <a href="{% url 'posts:profile' post.author %}">
           все посты пользователя
         </a>
       </li>
