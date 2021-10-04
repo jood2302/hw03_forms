@@ -6,7 +6,7 @@
   <h1>{{ group }}</h1>
   <h3>Описание группы: </h3>
   <p>{{ group.description }}</p>
-  {% for post in post_list %}
+  {% for post in page_obj %}
   <article>
     <ul>
       <li>

@@ -23,21 +23,20 @@ def group_posts(request, slug):
     template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
     page_number = request.GET.get('page')
-    post_list = Post.objects.filter(group=group).all()
+    post_list = Post.objects.filter(group=group)
     paginator = Paginator(post_list, settings.POST_COUNT)
     page_obj = paginator.get_page(page_number)
     context = {
         'title': f'Записи сообщества {slug}',
         'group': group,
         'page_obj': page_obj,
-        'post_list': post_list,
     }
     return render(request, template, context)
 
 
 def profile(request, username):
     user_profile = get_object_or_404(User, username=username)
-    user_posts = Post.objects.filter(author=user_profile).all()
+    user_posts = Post.objects.filter(author=user_profile)
     posts_count = user_posts.count()
     paginator = Paginator(user_posts, settings.POST_COUNT)
     page_number = request.GET.get('page')
@@ -52,7 +51,7 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     user_post = get_object_or_404(Post, pk=post_id)
-    posts = Post.objects.filter(author_id=user_post.author_id).all()
+    posts = Post.objects.filter(author_id=user_post.author_id)
     posts_count = posts.count()
     context = {
         'post': user_post,
@@ -63,15 +62,12 @@ def post_detail(request, post_id):
 
 @login_required
 def post_create(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST or None)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect('posts:profile', username=request.user.username)
-    else:
-        form = PostForm()
+    form = PostForm(request.POST or None)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        post.save()
+        return redirect('posts:profile', username=request.user.username)  
     return render(request, 'posts/create_post.html', {'form': form})
 
 
