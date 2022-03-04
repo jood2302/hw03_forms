@@ -1,3 +1,90 @@
-# backend_community_homework
+# Яндекс.Практикум
 
-[![CI](https://github.com/yandex-praktikum/hw03_forms/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw03_forms/actions/workflows/python-app.yml)
+# курс Python-разработчик
+
+## студент  Leonid Slavutin
+
+![](https://avatars.githubusercontent.com/u/86873729?s=400&u=79ca75646b1a1eb2fade4f19d435a8ba65a1fe58&v=4)
+
+## Учебный проект sprint_4.  Новые записи.
+
+***
+
+Html шаблоны и структура проекта заданы.
+
+Задачи проекта:
+* Настроен эмулятор отправки писем.
+* Cоздан и зарегистрирован контекст-процессор, добавляющий текущий год на все страницы в переменную {{ year }}.
+* Создано и подключено приложение about, в нём созданы статические страницы /about/author/ и /about/tech/.
+* Подключено приложение django.contrib.auth, его urls.py подключен к головному urls.py.
+* Создано и подключено приложение users, в нём Переопределены шаблоны для адресов /auth/login/ (авторизация), /auth/logout/ (выход из аккаунта).
+* Создана страница /auth/signup/ с формой для регистрации пользователей.
+* В приложении posts Создана страница пользователя profile/\<username\>/. На ней отображаются посты пользователя. 
+* Создана отдельная страница поста posts/<post_id>/.
+* Подключен паджинатор, он выводит по десять постов на главную страницу, на страницу профайла, на страницу группы.
+* Создана навигация по разделам.
+
+***
+
+Разворачивание проекта:
+
+Клонировать репозиторий и перейти в его папку в командной строке:
+
+```
+git clone https://github.com/coherentus/hw03_forms
+cd hw03_forms
+```
+
+Cоздать и активировать виртуальное окружение:
+
+```
+python -m venv venv
+```
+
+Для *nix-систем и MacOS:
+
+```
+source venv/bin/activate
+```
+
+Для windows-систем:
+
+```
+source venv/Scripts/activate
+```
+
+Установить зависимости из файла requirements.txt:
+
+```
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Выполнить миграции:
+
+```
+cd yatube
+python manage.py migrate
+```
+
+Запустить проект:
+
+```
+python manage.py runserver
+```
+
+Создать суперпользователя Django:
+
+```
+python3 manage.py createsuperuser
+```
+
+Сам проект и админ-панель по адресам:
+
+```
+http://127.0.0.1:8000
+
+http://127.0.0.1:8000/admin
+```
+
+***
